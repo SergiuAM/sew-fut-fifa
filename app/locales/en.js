@@ -126,6 +126,8 @@ export const enLocales = {
   deSelectAll: "Deselect All",
   showAlternatePostion: "Show Alternate Positions",
   showAlternatePostionInfo: "Will show Alternate Positions Info",
+  quicksellWorthlessBronze: "Quicksell worthless common bronze cards",
+  quicksellWorthlessBronzeInfo: "Will quicksell bronze common players worth 200 coins",
   levelError:
     "This feature is only available to 'Enhancer Gold' level users. Go to 'Store' Tab if you want to upgrade",
   generateSolution: "Generate Solution",

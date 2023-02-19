@@ -120,6 +120,8 @@ export const ptLocales = {
   deSelectAll: "Desselecionar Tudo",
   showAlternatePostion: "Mostrar Posições Alternativas",
   showAlternatePostionInfo: "Irá mostrar mostrar Posições Alternativas Will show Alternate Positions Info",
+  quicksellWorthlessBronze: "Quicksell worthless common bronze cards",
+  quicksellWorthlessBronzeInfo: "Will quicksell bronze common players worth 200 coins",
   levelError: "Este recurso está disponível apenas para usuário nível 'Enhancer Gold'. Vá até a aba da 'Loja' se desejar",
   generateSolution: "Gerar Solução",
   generateSolutionInfo: "Com base nos requisitos do DME fornecido o bot irá tentar gerar uma solução única não usada antes",

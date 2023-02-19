@@ -9,8 +9,10 @@ import { formatDataSource, hideLoader, showLoader, wait } from "./commonUtil";
 import { sendPinEvents, sendUINotification } from "./notificationUtil";
 import { t } from "../services/translate";
 import { updateUserCredits } from "../services/user";
-import { getDataSource } from "../services/repository";
+import { getDataSource, getValue } from "../services/repository";
 import { listCards } from "./reListUtil";
+import { fetchPrices } from "../services/datasource";
+
 
 export const validateFormAndOpenPack = async (pack) => {
   const popUpValues = getPopUpValues();
@@ -171,9 +173,51 @@ const handleItems = (items, action) => {
         return resolve(t("transferListFull"));
       }
       if (action === "listExternal") {
-        await listCards(items);
-        showLoader();
-        resolve("");
+        const { idQuicksellWorthlessBronze } = getValue("EnhancerSettings") || false;
+        if(idQuicksellWorthlessBronze){
+          let quickSellItems = [];
+          let listItems = [];
+          let prices = await fetchPrices(items);
+          for (let itm of items){
+            // THERE IS A POSIBILITY DUPLICATE NON PLAYERS GET TO LIST FUTBIN. WE CHECK IT HERE
+            if(!itm.isPlayer()){
+              quickSellItems.push(itm);
+            }
+            // WE QUICKSELL ONES THAT DOES NOT HAVE DEF ID CANT BE FOUND IN FUTBIN
+            if (!itm.definitionId) {
+              quickSellItems.push(itm);
+            }else {
+              let itemPrice = '';
+              for (let price of prices){
+                if(price[0] === `${itm.definitionId}_futbin_price`) itemPrice = price[1];
+              }
+  
+              // Rare flags are different on totw and libertadores and bronze rare. We know that bronze common flag is 0
+              if(itemPrice === 200 && itm.rareflag === 0){
+                quickSellItems.push(itm);
+              }
+              else{
+                listItems.push(itm);
+              }
+            }
+          }
+  
+          if(listItems.length > 0){
+            await listCards(listItems);
+            showLoader();
+          }
+          
+          if(quickSellItems.length > 0){
+            services.Item.discard(quickSellItems);
+          }
+        
+          resolve("");
+        } else {
+          await listCards(items);
+          showLoader();
+          resolve("");
+        }
+        
       } else {
         services.Item.move(items, ItemPile.TRANSFER).observe(
           this,

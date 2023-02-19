@@ -20,6 +20,7 @@ import {
   isMarketAlertApp,
   idOnlyBargain,
   idShowAlternatePosition,
+  idQuicksellWorthlessBronze
 } from "../app.constants";
 import { generateToggleInput } from "../utils/uiUtils/generateToggleInput";
 import { insertSettings } from "../utils/dbUtil";
@@ -209,6 +210,14 @@ EnhancerSettingsView.prototype._generate = function _generate() {
             t("showAlternatePostionInfo"),
             "idShowAlternatePosition" in enhancerSetting
               ? enhancerSetting["idShowAlternatePosition"]
+              : false
+          )}
+          ${generateToggleInput(
+            t("quicksellWorthlessBronze"),
+            { idQuicksellWorthlessBronze },
+            t("quicksellWorthlessBronzeInfo"),
+            "idQuicksellWorthlessBronze" in enhancerSetting
+              ? enhancerSetting["idQuicksellWorthlessBronze"]
               : false
           )}
           ${

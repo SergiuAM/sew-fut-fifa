@@ -30,7 +30,7 @@ export const listForPrice = async (
       sellPrice,
       convertToSeconds(duration) || 3600
     );
-    await wait(getRandWaitTime("3-8"));
+    await wait(getRandWaitTime("6-12"));
   }
   return [true, sellPrice];
 };
